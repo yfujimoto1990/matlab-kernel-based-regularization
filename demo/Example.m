@@ -11,11 +11,11 @@ n=150; % 推定するインパルス応答のステップ数．なお，n≒Nに
 
 % 必要な情報を与えてインスタンスを生成．渡す情報は，同定入力u，観測出力y，推定するインパルス応答のステップ長n，そしてノイズ分散sigma2. 
 % ノイズ分散が未知の場合は空配列を渡しておくと，最小二乗法を用いて自動的にノイズ分散を推定する．
-kernel_dataset=DCKernel(u,y,n,[]);
+kernel_dataset=TCKernel(u,y,n,[]);
 
-% ハイパーパラメータの調整．これでkernel_dataset内部のハイパーパラメータが変更される．
+% ハイパーパラメータの調整．これでkernel_dataset内部のハイパーパラメータが変更される．DCカーネルを使う際は引数を三次元ベクトルにすること．
 kernel_dataset.Empirical_Bayes([1,0.8]); % 経験ベイズによるハイパーパラメータ調整．引数はハイパーパラメータの最適化の初期値．
-% kernel_dataset.SURE([1,0.8,0.9]); % SUREによるハイパーパラメータ調整．引数はハイパーパラメータの最適化の初期値．
+% kernel_dataset.SURE([1,0.8]); % SUREによるハイパーパラメータ調整．引数はハイパーパラメータの最適化の初期値．
 % kernel_dataset.manual_hyperparameter_setting([1,0.9,0.9]); % 手動でハイパーパラメータを設定する場合はこのコマンドを利用．
 
 [ghat,Khat]=kernel_dataset.ident(); % ghat:インパルス応答の事後平均，Khat:インパルス応答の事後分散
