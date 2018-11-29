@@ -1,13 +1,13 @@
 classdef SSKernel < kernels
-    % Stable-Spline (second-order stable spline) ƒJ[ƒlƒ‹‚ÌƒNƒ‰ƒXD
-    % k(i,j) = lambda * (alpha^(i+j+max(i,j))/2-alpha^(3*max(i,j))/6)‚Å—^‚¦‚ç‚ê‚éƒJ[ƒlƒ‹‚ðl‚¦‚éD
-    % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^theta‚Í[lambda, alpha]‚Ì“ñŽŸŒ³ƒxƒNƒgƒ‹D
-    % §–ñ‚Ílambda>0, 0<alpha<1
+    % Stable-Spline (second-order stable spline) ã‚«ãƒ¼ãƒãƒ«ã®ã‚¯ãƒ©ã‚¹ï¼Ž
+    % k(i,j) = lambda * (alpha^(i+j+max(i,j))/2-alpha^(3*max(i,j))/6)ã§ä¸Žãˆã‚‰ã‚Œã‚‹ã‚«ãƒ¼ãƒãƒ«ã‚’è€ƒãˆã‚‹ï¼Ž
+    % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿thetaã¯[lambda, alpha]ã®äºŒæ¬¡å…ƒãƒ™ã‚¯ãƒˆãƒ«ï¼Ž
+    % åˆ¶ç´„ã¯lambda>0, 0<alpha<1
     
     methods
-        function instance=SSKernel(u,y,n,sigma2) % ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-            % ˆø”‚ÍC“ü—Í—ñuCo—Í—ñyC„’è‚·‚éƒCƒ“ƒpƒ‹ƒX‰ž“š’·nCƒmƒCƒY•ªŽUsigma2
-            % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^theta‚ª–ž‚½‚·‚×‚«•s“™Ž®§–ñA<=b‚ÌA,b‚ðÝ’èD
+        function instance=SSKernel(u,y,n,sigma2) % ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+            % å¼•æ•°ã¯ï¼Œå…¥åŠ›åˆ—uï¼Œå‡ºåŠ›åˆ—yï¼ŒæŽ¨å®šã™ã‚‹ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹å¿œç­”é•·nï¼ŒãƒŽã‚¤ã‚ºåˆ†æ•£sigma2
+            % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿thetaãŒæº€ãŸã™ã¹ãä¸ç­‰å¼åˆ¶ç´„A<=bã®A,bã‚’è¨­å®šï¼Ž
             A=[-1,0;
                    0,-1;
                    0, 1];
@@ -17,10 +17,10 @@ classdef SSKernel < kernels
             instance=instance@kernels(u,y,n,A,b,sigma2);  
         end
         
-        function K=kernel_matrix(obj,theta) % ‘¼‚ÌÝ’èiƒX[ƒp[ƒNƒ‰ƒX‚Ìƒƒ\ƒbƒhj‚Æ‚ÌŠÖŒWãCŠÖ”–¼‚ð•ÏX‚µ‚È‚¢‚±‚ÆD
-            % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^theta‚©‚çn~n‚ÌƒJ[ƒlƒ‹s—ñ‚ð¶¬‚·‚éŠÖ”D
-            % ‚È‚¨Cn‚ðŒÄ‚Ño‚·‚Æ‚«‚Íobj.n‚Æ‚·‚ê‚Î—Ç‚¢D
-            T=ones(obj.n,1)*(1:obj.n);
+        function K=kernel_matrix(obj,theta) % ä»–ã®è¨­å®šï¼ˆã‚¹ãƒ¼ãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹ã®ãƒ¡ã‚½ãƒƒãƒ‰ï¼‰ã¨ã®é–¢ä¿‚ä¸Šï¼Œé–¢æ•°åã‚’å¤‰æ›´ã—ãªã„ã“ã¨ï¼Ž
+            % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿thetaã‹ã‚‰nÃ—nã®ã‚«ãƒ¼ãƒãƒ«è¡Œåˆ—ã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°ï¼Ž
+            % ãªãŠï¼Œnã‚’å‘¼ã³å‡ºã™ã¨ãã¯obj.Nfirã¨ã™ã‚Œã°è‰¯ã„ï¼Ž
+            T=ones(obj.Nfir,1)*(1:obj.Nfir);
             K=theta(1)*((theta(2).^(T+T'+max(T,T')))/2-(theta(2).^(3*max(T,T')))/6);
         end
        
