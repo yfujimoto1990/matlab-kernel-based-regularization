@@ -1,25 +1,25 @@
-classdef kernels < matlab.mixin.SetGetExactNames 
-    % ƒJ[ƒlƒ‹‘S”Ê‚ÉŠÖ‚í‚éƒpƒ‰ƒ[ƒ^‚âƒƒ\ƒbƒh‚ğ‹K’è‚·‚éƒNƒ‰ƒXD
-    % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚ÌŒˆ’èC—^‚¦‚ç‚ê‚½ƒf[ƒ^‚©‚ç‚Ì“¯’è‚È‚Ç‚Í‚±‚¿‚çD
+classdef kernels < matlab.mixin.SetGet 
+    % ã‚«ãƒ¼ãƒãƒ«å…¨èˆ¬ã«é–¢ã‚ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚„ãƒ¡ã‚½ãƒƒãƒ‰ã‚’è¦å®šã™ã‚‹ã‚¯ãƒ©ã‚¹ï¼
+    % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æ±ºå®šï¼Œä¸ãˆã‚‰ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã®åŒå®šãªã©ã¯ã“ã¡ã‚‰ï¼
     
     properties 
-        theta % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^
-        constraint_A % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚Ì§–ñFA*theta<=b‚È‚é§–ñ‚ÌA‚É‘Î‰
-        constraint_b % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚Ì§–ñFA*theta<=b‚È‚é§–ñ‚Ìb‚É‘Î‰         
-        U % “ü—Í—ñ‚Ì¬‚·Toeplitzs—ñDƒCƒ“ƒpƒ‹ƒX‰“šg‚É‘Î‚µCo—Í‚ªUg‚Å—^‚¦‚ç‚ê‚é‚æ‚¤‚É\¬‚·‚é
-        y % ŠÏ‘ªo—ÍƒxƒNƒgƒ‹
-        n % „’è‚·‚éƒCƒ“ƒpƒ‹ƒX‰“š‚Ì’·‚³
-        sigma2 % ƒmƒCƒY•ªU
-        N % ŠÏ‘ªƒf[ƒ^”
-        K % ƒJ[ƒlƒ‹s—ñDn~n‚ÌƒTƒCƒY
+        theta % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
+        constraint_A % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®åˆ¶ç´„ï¼šA*theta<=bãªã‚‹åˆ¶ç´„ã®Aã«å¯¾å¿œ
+        constraint_b % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®åˆ¶ç´„ï¼šA*theta<=bãªã‚‹åˆ¶ç´„ã®bã«å¯¾å¿œ         
+        U % å…¥åŠ›åˆ—ã®æˆã™Toeplitzè¡Œåˆ—ï¼ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹å¿œç­”gã«å¯¾ã—ï¼Œå‡ºåŠ›ãŒUgã§ä¸ãˆã‚‰ã‚Œã‚‹ã‚ˆã†ã«æ§‹æˆã™ã‚‹
+        y % è¦³æ¸¬å‡ºåŠ›ãƒ™ã‚¯ãƒˆãƒ«
+        Nfir % æ¨å®šã™ã‚‹ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹å¿œç­”ã®é•·ã•
+        sigma2 % ãƒã‚¤ã‚ºåˆ†æ•£
+        N % è¦³æ¸¬ãƒ‡ãƒ¼ã‚¿æ•°
+        K % ã‚«ãƒ¼ãƒãƒ«è¡Œåˆ—ï¼nÃ—nã®ã‚µã‚¤ã‚º
     end
     
     
     methods    
     
-        function instance=kernels(u,y,n,A,b,sigma2) % ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-            instance.n=n;
-            instance.y=reshape(y,[],1); % y‚Æ‚µ‚Ä‰¡ƒxƒNƒgƒ‹‚ª“ü‚Á‚Ä‚«‚½‚Æ‚µ‚Ä‚àc‚É•ÏŠ·
+        function instance=kernels(u,y,n,A,b,sigma2) % ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+            instance.Nfir=n;
+            instance.y=reshape(y,[],1); % yã¨ã—ã¦æ¨ªãƒ™ã‚¯ãƒˆãƒ«ãŒå…¥ã£ã¦ããŸã¨ã—ã¦ã‚‚ç¸¦ã«å¤‰æ›
             instance.N=length(y);
             instance.U=instance.toeplitz_for_convolution(u,n);
             if ~isempty(sigma2)
@@ -33,46 +33,46 @@ classdef kernels < matlab.mixin.SetGetExactNames
         end
                 
         function [ghat,Khat]=ident(obj)
-            % —^‚¦‚ç‚ê‚½ƒf[ƒ^‚Æİ’è‚³‚ê‚½ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚ğ—p‚¢‚ÄƒCƒ“ƒpƒ‹ƒX‰“š‚ğ“¯’è
+            % ä¸ãˆã‚‰ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã¨è¨­å®šã•ã‚ŒãŸãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ç”¨ã„ã¦ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹å¿œç­”ã‚’åŒå®š
             if isempty(obj.theta)
-                % ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚ªİ’è‚³‚ê‚Ä‚¢‚È‚¢ê‡ƒGƒ‰[‚ğ•Ô‚·
-                error('æ‚ÉƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚ğŒˆ’è‚µ‚Ä‚­‚¾‚³‚¢')
+                % ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒè¨­å®šã•ã‚Œã¦ã„ãªã„å ´åˆã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+                error('å…ˆã«ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ±ºå®šã—ã¦ãã ã•ã„')
             end
             
-            obj.K=obj.kernel_matrix(obj.theta); % –‘O‹¤•ªU‚ğŒvZ
+            obj.K=obj.kernel_matrix(obj.theta); % äº‹å‰å…±åˆ†æ•£ã‚’è¨ˆç®—
             
-            % –Œã‹¤•ªU‚ÌŒvZD–‘O‹¤•ªU‚Ìƒ‰ƒ“ƒN‚É‰‚¶‚ÄŒvZ‚ğ•ÏXD
-            if rank(obj.K)<obj.n 
-                % ƒ‰ƒ“ƒN—‚¿‚µ‚Ä‚¢‚éê‡‚ÌŒvZ.‹ts—ñ‚ğ—p‚¢‚È‚¢‚ªKhat‚ªi”’l“I‚Éj”¼³’è‘ÎÌs—ñ‚É‚È‚ç‚È‚¢ê‡‚ª‘¶İ‚·‚éD
+            % äº‹å¾Œå…±åˆ†æ•£ã®è¨ˆç®—ï¼äº‹å‰å…±åˆ†æ•£ã®ãƒ©ãƒ³ã‚¯ã«å¿œã˜ã¦è¨ˆç®—ã‚’å¤‰æ›´ï¼
+            if rank(obj.K)<obj.Nfir 
+                % ãƒ©ãƒ³ã‚¯è½ã¡ã—ã¦ã„ã‚‹å ´åˆã®è¨ˆç®—.é€†è¡Œåˆ—ã‚’ç”¨ã„ãªã„ãŒKhatãŒï¼ˆæ•°å€¤çš„ã«ï¼‰åŠæ­£å®šå¯¾ç§°è¡Œåˆ—ã«ãªã‚‰ãªã„å ´åˆãŒå­˜åœ¨ã™ã‚‹ï¼
                 Khat=obj.K-obj.K*obj.U'*((obj.U*obj.K*obj.U'+obj.sigma2*eye(obj.N))\obj.U*obj.K);
-            else % –‘O‹¤•ªU‚ªƒtƒ‹ƒ‰ƒ“ƒN‚È‚çC”’l“I‚É‚Í‚±‚¿‚ç‚Ì•û‚ªˆÀ’è‚µ‚Ä‚¢‚éD
+            else % äº‹å‰å…±åˆ†æ•£ãŒãƒ•ãƒ«ãƒ©ãƒ³ã‚¯ãªã‚‰ï¼Œæ•°å€¤çš„ã«ã¯ã“ã¡ã‚‰ã®æ–¹ãŒå®‰å®šã—ã¦ã„ã‚‹ï¼
                 Khat=inv(inv(obj.K)+obj.U'*obj.U/obj.sigma2);
             end
             
-            ghat=obj.K*((obj.sigma2*eye(obj.n)+obj.U'*obj.U*obj.K)\(obj.U'*obj.y)); % –Œã•½‹Ï‚ğŒvZD
+            ghat=obj.K*((obj.sigma2*eye(obj.Nfir)+obj.U'*obj.U*obj.K)\(obj.U'*obj.y)); % äº‹å¾Œå¹³å‡ã‚’è¨ˆç®—ï¼
         end
         
         function manual_hyperparameter_setting(obj,theta)
-            % è“®‚ÅƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚éƒƒ\ƒbƒhD
+            % æ‰‹å‹•ã§ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ï¼
             obj.theta=reshape(theta,[],1);            
         end
         
         function Empirical_Bayes(obj,x0)
-            % ü•Ó–Ş“xÅ‘å‰»‚É‚æ‚éƒnƒCƒp[ƒpƒ‰ƒ[ƒ^’²®Dx‚ªƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚É‘Î‰D
-            Z0=@(x) obj.U*obj.kernel_matrix(x)*obj.U'+obj.sigma2*eye(obj.N); % o—Í‚Ì–‘O‹¤•ªU
-            Z=@(x) (Z0(x)+Z0(x)')/2; % ”’l“I‚É‹¤•ªUs—ñ‚ª‘ÎÌs—ñ‚Æ‚È‚ç‚È‚¢ê‡‚ª‚ ‚é‚Ì‚ÅC‚»‚Ì•â³
+            % å‘¨è¾ºå°¤åº¦æœ€å¤§åŒ–ã«ã‚ˆã‚‹ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿èª¿æ•´ï¼xãŒãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«å¯¾å¿œï¼
+            Z0=@(x) obj.U*obj.kernel_matrix(x)*obj.U'+obj.sigma2*eye(obj.N); % å‡ºåŠ›ã®äº‹å‰å…±åˆ†æ•£
+            Z=@(x) (Z0(x)+Z0(x)')/2; % æ•°å€¤çš„ã«å…±åˆ†æ•£è¡Œåˆ—ãŒå¯¾ç§°è¡Œåˆ—ã¨ãªã‚‰ãªã„å ´åˆãŒã‚ã‚‹ã®ã§ï¼Œãã®è£œæ­£
             
-            J=@(x) sum(log(eig(Z(x))))+obj.y'*(Z(x)\obj.y); % ‘Î”ü•Ó–Ş“xŠÖ”D’è”€‚Íœ‚¢‚Ä‚¢‚é
+            J=@(x) sum(log(eig(Z(x))))+obj.y'*(Z(x)\obj.y); % å¯¾æ•°å‘¨è¾ºå°¤åº¦é–¢æ•°ï¼å®šæ•°é …ã¯é™¤ã„ã¦ã„ã‚‹
             
-            obj.theta=fmincon(J,x0,obj.constraint_A,obj.constraint_b); % fmincon‚ğ—p‚¢‚½Å“K‰»D
+            obj.theta=fmincon(J,x0,obj.constraint_A,obj.constraint_b); % fminconã‚’ç”¨ã„ãŸæœ€é©åŒ–ï¼
         end
         
         function SURE(obj,x0)
-            % SURE‚É‚æ‚éƒnƒCƒp[ƒpƒ‰ƒ[ƒ^’²®Dx‚ªƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚É‘Î‰
-            ghat_theta=@(x)  obj.kernel_matrix(x)*((obj.sigma2*eye(obj.n)+(obj.U'*obj.U)*obj.kernel_matrix(x))\(obj.U'*obj.y));% ƒpƒ‰ƒ[ƒ^x‚ÌŒ³‚Å‚Ì„’èƒCƒ“ƒpƒ‹ƒX‰“š
-            Jsure=@(x) norm(obj.y-obj.U*ghat_theta(x))^2+2*obj.sigma2*trace(obj.U*obj.kernel_matrix(x)*((obj.U'*obj.U*obj.kernel_matrix(x)+obj.sigma2*eye(obj.n))\obj.U'));
+            % SUREã«ã‚ˆã‚‹ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿èª¿æ•´ï¼xãŒãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«å¯¾å¿œ
+            ghat_theta=@(x)  obj.kernel_matrix(x)*((obj.sigma2*eye(obj.Nfir)+(obj.U'*obj.U)*obj.kernel_matrix(x))\(obj.U'*obj.y));% ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿xã®å…ƒã§ã®æ¨å®šã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹å¿œç­”
+            Jsure=@(x) norm(obj.y-obj.U*ghat_theta(x))^2+2*obj.sigma2*trace(obj.U*obj.kernel_matrix(x)*((obj.U'*obj.U*obj.kernel_matrix(x)+obj.sigma2*eye(obj.Nfir))\obj.U'));
             
-            obj.theta=fmincon(Jsure,x0,obj.constraint_A,obj.constraint_b); % fmincon‚ğ—p‚¢‚½Å“K‰»D
+            obj.theta=fmincon(Jsure,x0,obj.constraint_A,obj.constraint_b); % fminconã‚’ç”¨ã„ãŸæœ€é©åŒ–ï¼
         end
         
         function value=get.constraint_A(obj)
@@ -83,9 +83,9 @@ classdef kernels < matlab.mixin.SetGetExactNames
         end
         
         function set.theta(obj,theta)
-            theta=reshape(theta,[],1); %@‰¡ƒxƒNƒgƒ‹‚Å“ü‚Á‚Ä‚«‚Ä‚à‘Î‰
-            % theta‚ÌŸŒ³”‚ª³‚µ‚­İ’è‚³‚ê‚Ä‚¢‚é‚©”»’èD
-            % ‚»‚ÌŒã•s“™®§–ñ‚ğ–‚½‚µ‚Ä‚¢‚é‚©Šm”F
+            theta=reshape(theta,[],1); %ã€€æ¨ªãƒ™ã‚¯ãƒˆãƒ«ã§å…¥ã£ã¦ãã¦ã‚‚å¯¾å¿œ
+            % thetaã®æ¬¡å…ƒæ•°ãŒæ­£ã—ãè¨­å®šã•ã‚Œã¦ã„ã‚‹ã‹åˆ¤å®šï¼
+            % ãã®å¾Œä¸ç­‰å¼åˆ¶ç´„ã‚’æº€ãŸã—ã¦ã„ã‚‹ã‹ç¢ºèª
             A=obj.get.constraint_A();
             b=obj.get.constraint_b(); 
             ntheta=size(A,2);
@@ -93,10 +93,10 @@ classdef kernels < matlab.mixin.SetGetExactNames
                 if nnz(A*theta<=b)==length(b)
                     obj.theta=theta;
                 else
-                    error('ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚ª§–ñ‚ğ–‚½‚µ‚Ä‚¢‚Ü‚¹‚ñ')
+                    error('ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒåˆ¶ç´„ã‚’æº€ãŸã—ã¦ã„ã¾ã›ã‚“')
                 end
             else
-                error('ƒnƒCƒp[ƒpƒ‰ƒ[ƒ^‚Í%d ŸŒ³‚ÌƒxƒNƒgƒ‹‚Æ‚µ‚Ä‚­‚¾‚³‚¢\n', ntheta)
+                error('ãƒã‚¤ãƒ‘ãƒ¼ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯%d æ¬¡å…ƒã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ãã ã•ã„\n', ntheta)
             end
         end
         
@@ -104,7 +104,7 @@ classdef kernels < matlab.mixin.SetGetExactNames
 
     methods(Static) 
         function U=toeplitz_for_convolution(u,n) 
-            % “ü—ÍƒxƒNƒgƒ‹U‚ÆƒCƒ“ƒpƒ‹ƒX‰“š’·n‚©‚ç“KØ‚ÈU‚ğ\¬‚·‚éDU‚É‚Â‚¢‚Ä‚ÍƒvƒƒpƒeƒB‚ÌƒRƒƒ“ƒgQÆ
+            % å…¥åŠ›ãƒ™ã‚¯ãƒˆãƒ«Uã¨ã‚¤ãƒ³ãƒ‘ãƒ«ã‚¹å¿œç­”é•·nã‹ã‚‰é©åˆ‡ãªUã‚’æ§‹æˆã™ã‚‹ï¼Uã«ã¤ã„ã¦ã¯ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®ã‚³ãƒ¡ãƒ³ãƒˆå‚ç…§
             U=toeplitz(u,[u(1),zeros(1,n-1)]);            
         end
     end    

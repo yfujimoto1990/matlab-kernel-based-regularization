@@ -1,5 +1,7 @@
 # matlab-kernel-based-regularization
 カーネルを用いたシステム同定のMATLABでの実装サンプルです．
+2018/11/29 matlab 2016b以前にも対応できるよう，使用していたスーパークラスを変更しました．
+
 
 使用する際にはoptimization toolboxが必要です．
 
